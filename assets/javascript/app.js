@@ -10,3 +10,33 @@ var config = {
 
 firebase.initializeApp(config);
 
+var database = firebase.database();
+
+var train = "";
+var destination = "";
+var nextArrival = "";
+var minutesAway = 0;
+var frequency = 0;
+
+
+
+
+database.ref().on("child_added", function(snapshot){
+
+  var sv = snapshot.val();
+
+  var createTableRow = $("<tr>");
+  var createTableData = $("<td>");
+
+  var addTrain = createTableData.text(sv.train);
+  var addDestination = createTableData.text(sv.destination);
+  var addNextArrival = createTableData.text(sv.nextArrival);
+  var addMinutesAway = createTableData.text(sv.minutesAway);
+  var addFrequency = createTableData.text(sv.frequency);
+
+  createTableRow.append(addTrain, addDestination, addNextArrival, addMinutesAway, addFrequency);
+
+  $("tbody").append(createTableRow);
+
+
+});
