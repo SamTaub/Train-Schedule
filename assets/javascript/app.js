@@ -15,8 +15,8 @@ var database = firebase.database();
 var train = "";
 var destination = "";
 var nextArrival = "";
-var minutesAway = 0;
-var frequency = 0;
+var minutesAway = 0 + " minutes";
+var frequency = 0 + " minutes";
 
 
 
@@ -53,8 +53,8 @@ $("#submit").on("click", function(){
     train: train,
     destination: destination,
     nextArrival: nextArrival,
-    frequency: frequency,
-    minutesAway: "placeholder"
+    frequency: frequency + " minutes",
+    minutesAway: "placeholder" + " minutes"
 
   });
 
