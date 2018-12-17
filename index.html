@@ -35,44 +35,58 @@
         </div>
         <div class="row">
             <div class="col">
-                <table class="table table-striped table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">Train</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Next Arrival</th>
-                            <th scope="col">Minutes Away</th>
-                            <th scope="col">Frequency</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">
+                        Current Schedule
+                    </li>
+                    <li class="list-group-item">
+                        <table class="table table-striped table-dark table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Train</th>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Next Arrival</th>
+                                    <th scope="col">Minutes Away</th>
+                                    <th scope="col">Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                <form>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">Train</label>
-                        <input type="text" class="form-control" id="formTrain" placeholder="Train">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">Desination</label>
-                        <input type="text" class="form-control" id="formDestination" placeholder="Destination">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">First Train Time (HH:mm)</label>
-                        <input type="time" class="form-control" id="formFirstTrain" placeholder="00:00">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">Frequencey (min)</label>
-                        <input type="number" class="form-control" id="formFrequency" placeholder="00">
-                    </div>
-                    <button type="submit" class="btn btn-dark">Submit</button>
-                </form>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">
+                        Add New Train
+                    </li>
+                    <li class="list-group-item">
+                        <form>
+                            <div class="form-group">
+                                <label for="trainInput">Train</label>
+                                <input type="text" class="form-control" id="formTrain" placeholder="Train">
+                            </div>
+                            <div class="form-group">
+                                <label for="destinationInput">Desination</label>
+                                <input type="text" class="form-control" id="formDestination" placeholder="Destination">
+                            </div>
+                            <div class="form-group">
+                                <label for="timeInput">First Train Time (HH:mm AM/PM)</label>
+                                <input type="time" class="form-control" id="formFirstTrain" placeholder="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="FrequencyInput">Frequency (in minutes)</label>
+                                <input type="number" class="form-control" id="formFrequency" placeholder="00">
+                            </div>
+                            <button type="submit" class="btn btn-dark">Submit</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
 
         </div>
