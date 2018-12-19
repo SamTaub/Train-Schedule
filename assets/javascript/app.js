@@ -7,21 +7,14 @@ var config = {
   storageBucket: "train-schedule-58361.appspot.com",
   messagingSenderId: "669043110510"
 };
-
 firebase.initializeApp(config);
-
 var database = firebase.database();
-
-
-
-
-
-
 
 $("#submit").on("click", function () {
 
   event.preventDefault();
 
+  
   var train = $("#formTrain").val().trim();
   var destination = $("#formDestination").val().trim();
   var nextArrival = moment($("#formFirstTrain").val().trim(), 'LT').format('X');
@@ -43,22 +36,21 @@ $("#submit").on("click", function () {
 
 });
 
-database.ref().on("child_added", function (childSnapshot) {
+database.ref().on("child_added", function (snapshot) {
 
-  var cv = childSnapshot.val();
+  var sv = snapshot.val();
 
-  train = cv.train;
-  destination = cv.destination;
-  nextArrival = cv.nextArrival;
-  frequency = cv.frequency;
+  train = sv.train;
+  destination = sv.destination;
+  nextArrival = sv.nextArrival;
+  frequency = sv.frequency;
 
 
-  var trainDifference = moment().diff(moment.unix(childSnapshot.val().nextArrival), 'minutes');
+  var trainDifference = moment().diff(moment.unix(sv.nextArrival), 'minutes');
   var timeRemainder = trainDifference % frequency;
   var minutesAway = frequency - timeRemainder;
-  console.log(minutesAway);
 
-  nextArrival = moment().add(minutesAway, 'm').format('HH:mm a');
+  nextArrival = moment().add(minutesAway, 'm').format('h:mm a');
 
   var createRow = $("<tr>").append(
     $("<td>").text(train),
@@ -74,3 +66,4 @@ database.ref().on("child_added", function (childSnapshot) {
 
 });
 
+$("#current-time").text(moment().format("dddd, MMMM Do, YYYY h:mm a"));
