@@ -12,50 +12,65 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-var train = "";
-var destination = "";
-var nextArrival = "";
-var minutesAway = 0 + " minutes";
-var frequency = 0 + " minutes";
 
 
 
 
-database.ref().on("child_added", function(snapshot){
 
-  var sv = snapshot.val();
 
-  var createTableRow = $("<tr>");
-
-  var addTrain = $("<td>").text(sv.train);
-  var addDestination =  $("<td>").text(sv.destination);
-  var addNextArrival = $("<td>").text(sv.nextArrival);
-  var addMinutesAway =  $("<td>").text(sv.minutesAway);
-  var addFrequency =  $("<td>").text(sv.frequency);
-
-  createTableRow.append(addTrain, addDestination, addNextArrival, addMinutesAway, addFrequency);
-
-  $("tbody").append(createTableRow);
-
-});
-
-$("#submit").on("click", function(){
+$("#submit").on("click", function () {
 
   event.preventDefault();
 
-  train = $("#formTrain").val().trim();
-  destination = $("#formDestination").val().trim();
-  nextArrival = $("#formFirstTrain").val().trim();
-  frequency = $("#formFrequency").val().trim();
+  var train = $("#formTrain").val().trim();
+  var destination = $("#formDestination").val().trim();
+  var nextArrival = moment($("#formFirstTrain").val().trim(), 'LT').format('X');
+  var frequency = $("#formFrequency").val().trim();
 
-
-  database.ref().push({
+  var trainTime = {
     train: train,
     destination: destination,
     nextArrival: nextArrival,
-    frequency: frequency + " minutes",
-    minutesAway: "placeholder" + " minutes"
+    frequency: frequency
+  };
 
-  });
+  database.ref().push(trainTime);
+
+  $("#formTrain").val('');
+  $("#formDestination").val('');
+  $("#formFirstTrain").val('');
+  $("#formFrequency").val('');
 
 });
+
+database.ref().on("child_added", function (childSnapshot) {
+
+  var cv = childSnapshot.val();
+
+  train = cv.train;
+  destination = cv.destination;
+  nextArrival = cv.nextArrival;
+  frequency = cv.frequency;
+
+
+  var trainDifference = moment().diff(moment.unix(childSnapshot.val().nextArrival), 'minutes');
+  var timeRemainder = trainDifference % frequency;
+  var minutesAway = frequency - timeRemainder;
+  console.log(minutesAway);
+
+  nextArrival = moment().add(minutesAway, 'm').format('HH:mm a');
+
+  var createRow = $("<tr>").append(
+    $("<td>").text(train),
+    $("<td>").text(destination),
+    $("<td>").text(nextArrival),
+    $("<td>").text(minutesAway),
+    $("<td>").text(frequency),
+  );
+
+
+
+  $("tbody").append(createRow);
+
+});
+
