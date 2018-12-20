@@ -8,6 +8,7 @@ var config = {
   messagingSenderId: "669043110510"
 };
 firebase.initializeApp(config);
+
 var database = firebase.database();
 
 $("#submit").on("click", function () {
